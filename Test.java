@@ -27,7 +27,7 @@ public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
 		Random rand = new Random();
 
-		String [] enemies = {"Zombie", "Rat", "Skeleton", "Vampire"};
+		String [] enemies = {"Sewer Rat", "Mech Rat", "Bone Hawk", "Grave Child"};
 		int maxEnemyHealth = 75;
 		int enemyAttack = 25;
 
@@ -39,14 +39,14 @@ public static void main(String[] args) {
 
 		boolean running = true;
 {
-		slowPrintln("Welcome to the Dungeon!");
+		slowPrintln("\nWelcome to Extinction!");
 
 		GAME:
 		while (running) {
 
 			int enemyHealth = rand.nextInt(maxEnemyHealth);
 			String enemy = enemies[rand.nextInt(enemies.length)];
-			slowPrintln(enemy + " appeared!\n");
+			slowPrintln("\n" + enemy + " appeared!\n");
 
 			while(enemyHealth > 0) {
 				slowPrintln("Your HP: " + pHealth);
@@ -64,8 +64,11 @@ public static void main(String[] args) {
 
 					enemyHealth -= damageDealt;
 					pHealth -= damageTaken;
+					if (damageDealt <= 0) {
+						slowPrintln("You attempt to strike the " + enemy + ", but they dodge your attack!");
+					}
 					
-					slowPrintln("You slap the " + enemy + " and deal " + damageDealt + " damage!");
+					slowPrintln("You attack the " + enemy + " and deal " + damageDealt + " damage!");
 					slowPrintln(enemy + " attacks you!");
 					slowPrintln("You take " + damageTaken + " damage.");
 
@@ -101,15 +104,31 @@ public static void main(String[] args) {
 				break;
 			}
 			
+			System.out.println("\n----------------------------");
 			slowPrintln("\n" + enemy + " has been defeated!\n");
 			slowPrintln("You have " + pHealth + " HP left.");
 			if (rand.nextInt(100) > healthPotDropChance) {
 				numHealthPots++;
 				slowPrintln(enemy + " has dropped a health potion!");
 				slowPrintln("You now have " + numHealthPots + " health potions.");
+			}
 			System.out.println("\n----------------------------\n");
+			slowPrintln("What would you like to do now?\nContinue\nExit\nView stats");
+
+			String input = in.nextLine();
+
+			if (input.equals("Continue")) {
+				slowPrintln("Your adventure continues.");
 			}
 
+			if (input.equals("View stats")) {
+				System.out.println("----------\nHP: " + pHealth + "\nStrength: " + pAttack + "\nPotions: " + numHealthPots + " health potions\n----------");
+
+			if (input.equals("Exit")) {
+				slowPrintln("You exit the dungeon.");
+				break;
+				}
+			}
 		}
 	}
 }
